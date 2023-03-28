@@ -13,6 +13,8 @@ jobs:
         run: echo "ENV_NAME=$( [ "$GITHUB_REF" == "refs/heads/master" ] && echo 'uat' || echo ${GITHUB_REF##*/} )" >> $GITHUB_ENV
       - name: Docker login
         run: docker login  -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Go to app dir
+        run: cd vanilasky
       - name: Build Docker image
         run : docker build . --file Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/vanilasky:${{ env.ENV_NAME }}
       - name: Push Docker image
