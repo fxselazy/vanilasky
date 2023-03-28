@@ -14,7 +14,9 @@ jobs:
       - name: Docker login
         run: docker login  -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: Go to app dir
-        run: cd vanilasky
+        run: | 
+          pwd
+          ls -la
       - name: Build Docker image
         run : docker build . --file Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/vanilasky:${{ env.ENV_NAME }}
       - name: Push Docker image
