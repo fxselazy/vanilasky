@@ -12,11 +12,19 @@ jobs:
         run: lsb_release -a
       - name: display wording
         run: echo hello ${{ github.actor }}
-  check-window-version:
+  check-window-version-shell:
     runs-on: windows-2019
     steps:
       - name: check server-info
         run: systeminfo
+      - name: display wording
+        run: echo hello ${{ github.actor }}
+  check-window-version-CMD:
+    runs-on: windows-2022
+    steps:
+      - name: check server-info
+        run: ver
+        shell: cmd
       - name: display wording
         run: echo hello ${{ github.actor }}
     
