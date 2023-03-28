@@ -1,4 +1,4 @@
-.apiVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}
@@ -28,11 +28,13 @@ spec:
             path: {{ .Values.vanila.healthCheckPath }}
             port: {{ .Values.vanila.port }}
             scheme: HTTP
+          initialDelaySeconds: {{ .Values.vanila.checkdelay}}
         readinessProbe:
           httpGet:
             path: {{ .Values.vanila.healthCheckPath }}
             port: {{ .Values.vanila.port }}
             scheme: HTTP
+          initialDelaySeconds: {{ .Values.vanila.checkdelay}}
         {{- if .Values.extraEnv }}
         env:
         {{- range $key, $value := .Values.extraEnv }}
