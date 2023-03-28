@@ -1,23 +1,26 @@
 vanila:
   namespace: vanilasky-dev
-  image: ghcr.io/fxselazy/vanilasky
-  tag: dev
+  image: slezzlazy/vanilasky
+  tag: v3
   replicas: 1
-  imagePullSecrets: github-registry
-  port: 9000
-  # healthCheckPath: "/health"
+  imagePullSecrets: docker-registry
+  port: 8080
+  healthCheckPath: "/"
+  checkdelay: 120
 ingress:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /$2
-  host: dev.iternship.net
-  path: "/vanila(/|$)(.*)"
+  host: iternship.net
+  # secret: ingress-cert
+  path: "/"
   serviceType: ClusterIP
-extraEnv:
-  COMMIT_ID: CHANGEME
-้hpa:
-  enabled: false  # <-- change to true to create HPA
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+hpa:
+  enabled: true
+  maxReplicas: 2
+  # average total CPU usage per pod (1-100)
+  cpu: 50
+  # average memory usage per pod (100Mi-1Gi)
+  memory: 250Mi
+  # average http requests per second per pod (k8s-prometheus-adapter)
+  requests:
