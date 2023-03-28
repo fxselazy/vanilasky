@@ -17,6 +17,9 @@ jobs:
         run: | 
           pwd
           ls -la
+          cd vanilasky
+          pwd
+          ls -la
       - name: Build Docker image
         run : docker build . --file Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/vanilasky:${{ env.ENV_NAME }}
       - name: Push Docker image
