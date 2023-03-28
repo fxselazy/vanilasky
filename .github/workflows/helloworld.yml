@@ -9,6 +9,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: check server-info
-        run: lsb-relases -a
+        run: lsb-releases -a
       - name: display wording
         run: echo hello ${{ github.actor }}
