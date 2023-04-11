@@ -1,0 +1,26 @@
+vanila:
+  namespace: vanilasky-dev
+  image: slezzlazy/vanilasky
+  tag: v3
+  replicas: 1
+  imagePullSecrets: docker-registry
+  port: 8080
+  healthCheckPath: "/"
+  checkdelay: 120
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  host: iternship.net
+  # secret: ingress-cert
+  path: "/"
+  serviceType: ClusterIP
+hpa:
+  enabled: true
+  maxReplicas: 2
+  # average total CPU usage per pod (1-100)
+  cpu: 50
+  # average memory usage per pod (100Mi-1Gi)
+  memory: 250Mi
+  # average http requests per second per pod (k8s-prometheus-adapter)
+  requests:
