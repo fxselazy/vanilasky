@@ -13,7 +13,7 @@ jobs:
         run: |
           cd vanilasky
           git pull 
-          git checkout dev
+          git checkout minikube
           ls -la
       - name: Set env
         run: |
