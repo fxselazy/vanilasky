@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is learning GitHub Actions
 on:
   push:
     branches: 
-      - dev
+      - lab
 jobs:
   check-bats-version:
     runs-on: ubuntu-20.04
