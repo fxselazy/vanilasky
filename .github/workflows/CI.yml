@@ -33,5 +33,5 @@ jobs:
       - name: check files
         run: ls -la
       - name: deploy app with helm chart
-        run: helm upgrade --install -f vanilasky/k8s/helm-values/values-vanila-dev.yaml vanilasky-service vanilasky/k8s/helm-chart --set image=${{ secrets.DOCKER_HUB_USERNAME }}/vanilasky:${{ env.ENV_NAME }}_${GITHUB_SHA::6}
+        run: helm upgrade --install -f vanilasky/k8s/helm-values/values-vanila-dev.yaml vanilasky-service vanilasky/k8s/helm-chart/ --set image=${{ secrets.DOCKER_HUB_USERNAME }}/vanilasky:${{ env.ENV_NAME }}_${GITHUB_SHA::6}
         
