@@ -17,17 +17,17 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
+      - name: Set env
+        run: |
+          echo "ENV_NAME=$( [ "$GITHUB_REF" == "refs/heads/master" ] && echo 'uat' || echo ${GITHUB_REF##*/} )" >> $GITHUB_ENV
 #       - name: Checkout code clone
 #         run: git clone -b dev https://github.com/${{ github.actor }}/vanilasky.git
       - name: Change to app directory & Update Repo
         run: |
           cd vanilasky
           git pull 
-          git checkout ${{ env.ENV_NAME }
+          git checkout ${{ env.ENV_NAME }}
           ls -la
-      - name: Set env
-        run: |
-          echo "ENV_NAME=$( [ "$GITHUB_REF" == "refs/heads/master" ] && echo 'uat' || echo ${GITHUB_REF##*/} )" >> $GITHUB_ENV
       - name: Docker login
         run: docker login  -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: Build Docker image
