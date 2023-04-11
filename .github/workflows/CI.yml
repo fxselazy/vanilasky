@@ -21,8 +21,8 @@ jobs:
       - name: Docker login
         run: docker login  -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: Build Docker image
-        run : docker build . --file vanilasky/Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/vanilasky:${{ env.ENV_NAME }}:${GITHUB_SHA::6}
+        run : docker build . --file vanilasky/Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/vanilasky:${{ env.ENV_NAME }}_${GITHUB_SHA::6}
       - name: Push Docker image
-        run : docker push ${{ secrets.DOCKER_HUB_USERNAME }}/vanilasky:${{ env.ENV_NAME }}:${GITHUB_SHA::6}
+        run : docker push ${{ secrets.DOCKER_HUB_USERNAME }}/vanilasky:${{ env.ENV_NAME }}_${GITHUB_SHA::6}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
