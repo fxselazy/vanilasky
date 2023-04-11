@@ -1,8 +1,19 @@
 name: CI
+# on:
+#   push:
+#     branches:
+#       - minikube
 on:
-  push:
-    branches:
-      - minikube
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'input your software version'
+        required: true
+        default: '1.0.0'
+        type: string
+  push: 
+    branches: minikube
+
 jobs:
   build:
     runs-on: self-hosted
@@ -26,12 +37,21 @@ jobs:
         run : docker push ${{ secrets.DOCKER_HUB_USERNAME }}/vanilasky:${{ env.ENV_NAME }}_${GITHUB_SHA::6}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-  deploy:
-    runs-on: self-hosted
+
+  prepare:
     needs: build
+    runs-on: self-hosted
     steps:
-      - name: check files
-        run: ls -la ./vanilasky/ 
-      - name: deploy app with helm chart
-        run: helm upgrade --install -f vanilasky/k8s/helm-values/values-vanila-dev.yaml vanilasky-service vanilasky/k8s/helm/ --set image=${{ secrets.DOCKER_HUB_USERNAME }}/vanilasky:${{ env.ENV_NAME }}_${GITHUB_SHA::6}
+      - name: Set Tag on Workflow Dispatch
+        if: github.event_name == 'workflow_dispatch'
+        run: echo "${{ github.event.inputs.version }}"
+
+#   deploy:
+#     runs-on: self-hosted
+#     needs: prepare
+#     steps:
+#       - name: check files
+#         run: ls -la ./vanilasky/ 
+#       - name: deploy app with helm chart
+#         run: helm upgrade --install -f vanilasky/k8s/helm-values/values-vanila-dev.yaml vanilasky-service vanilasky/k8s/helm/ --set image=${{ secrets.DOCKER_HUB_USERNAME }}/vanilasky:${{ env.ENV_NAME }}_${GITHUB_SHA::6}
   
