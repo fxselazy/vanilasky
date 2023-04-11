@@ -22,6 +22,7 @@ jobs:
           echo "ENV_NAME=$( [ "$GITHUB_REF" == "refs/heads/master" ] && echo 'uat' || echo ${GITHUB_REF##*/} )" >> $GITHUB_ENV
   build:
     runs-on: self-hosted
+    needs: setenv
     steps:
      
 #       - name: Checkout code clone
