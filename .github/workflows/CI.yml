@@ -23,7 +23,7 @@ jobs:
         run: |
           cd vanilasky
           git pull 
-          git checkout minikube
+          git checkout ${{ env.ENV_NAME }
           ls -la
       - name: Set env
         run: |
