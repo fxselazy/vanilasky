@@ -14,6 +14,7 @@ jobs:
           cd vanilasky
           git pull 
           git checkout dev
+          ls -la
       - name: Set env
         run: echo "ENV_NAME=$( [ "$GITHUB_REF" == "refs/heads/master" ] && echo 'uat' || echo ${GITHUB_REF##*/} )" >> $GITHUB_ENV
       - name: Docker login
