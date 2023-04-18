@@ -2,7 +2,7 @@ name: Lab-Workflow
 on:
   push:
     branches:
-      - main
+      - labaction
 jobs:
   build: 
     runs-on: ubuntu-latest
